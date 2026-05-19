@@ -1,0 +1,39 @@
+# Visual Studio build output
+x64/
+Win32/
+Debug/
+Release/
+*.exe
+*.ilk
+*.pdb
+*.obj
+*.lib
+*.exp
+*.dll
+*.pch
+
+# Visual Studio project files
+*.aps
+*.vcxproj.user
+*.vcxproj.FileListAbsolute.txt
+*.sdf
+*.opensdf
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Visual Studio temp/cache folders
+.vs/
+ipch/
+*.VC.db
+*.VC.opendb
+
+# NuGet packages
+packages/
+*.nupkg
+
+# Windows thumbnail cache
+Thumbs.db
+ehthumbs.db
+Desktop.ini
