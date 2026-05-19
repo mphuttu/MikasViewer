@@ -16,6 +16,10 @@ A Windows image viewer built with MFC (Microsoft Foundation Classes) and GDI+.
 - **Mouse wheel zoom** — Scroll to zoom in/out (±15 % per notch, range 5 %–2000 %). Zoom is anchored to the mouse cursor position.
 - **Double-buffered rendering** — Flicker-free drawing with GDI+ high-quality bicubic interpolation.
 - **Dark background** — Dark grey background (similar to common image viewers) for comfortable image browsing.
+- **Title bar** — Shows the current image filename in the window title bar.
+- **WebP support** — WebP images are loaded via Windows Imaging Component (WIC) as a fallback when GDI+ cannot decode the format.
+- **Print & Print Preview** — Print the current image via **File → Print** or preview it with **File → Print Preview**. The image is automatically scaled to fill the printable area (with a 5 % margin on each side) while preserving the aspect ratio, and centered on the page.
+- **Help system** — Built-in CHM help file, opened via **Help → Help Topics** or <kbd>F1</kbd>. Covers browsing, zoom/pan, supported formats, printing, and keyboard shortcuts.
 
 ## Supported Image Formats
 
@@ -26,7 +30,9 @@ A Windows image viewer built with MFC (Microsoft Foundation Classes) and GDI+.
 | `.bmp` | Bitmap |
 | `.gif` | GIF |
 | `.tif` / `.tiff` | TIFF |
-| `.webp` | WebP |
+| `.webp` | WebP (via WIC) |
+
+> **WebP on Windows 10:** requires [WebP Image Extensions](https://apps.microsoft.com/detail/9pg2dk419drg) from the Microsoft Store. Built-in on Windows 11.
 
 ## Requirements
 
@@ -42,6 +48,11 @@ A Windows image viewer built with MFC (Microsoft Foundation Classes) and GDI+.
 
 The executable is placed in `x64\Debug\` or `x64\Release\`.
 
+> **Help file:** After building, copy `help\MikasViewer.chm` to the same directory as the executable. To recompile the help file after editing sources, run:
+> ```
+> "C:\Program Files (x86)\HTML Help Workshop\hhc.exe" help\MikasViewer.hhp
+> ```
+
 ## Usage
 
 | Action | Result |
@@ -50,6 +61,9 @@ The executable is placed in `x64\Debug\` or `x64\Release\`.
 | Click an image file in the tree | Displays that image |
 | Mouse wheel | Zoom in / out (anchored to cursor) |
 | Left-click + drag | Pan the image |
+| `Ctrl+P` | Print the current image |
+| **File → Print Preview** | Preview the print output before printing |
+| <kbd>F1</kbd> or **Help → Help Topics** | Open the built-in help file |
 
 ## License
 

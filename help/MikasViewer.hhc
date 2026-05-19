@@ -1,0 +1,37 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<HTML>
+<HEAD>
+<meta name="GENERATOR" content="Microsoft&reg; HTML Help Workshop 4.1">
+</HEAD>
+<BODY>
+<OBJECT type="text/site properties">
+    <param name="ImageType" value="Folder">
+</OBJECT>
+<UL>
+    <LI><OBJECT type="text/sitemap">
+        <param name="Name" value="Overview">
+        <param name="Local" value="overview.htm">
+    </OBJECT>
+    <LI><OBJECT type="text/sitemap">
+        <param name="Name" value="Browsing and Viewing Images">
+        <param name="Local" value="usage.htm">
+    </OBJECT>
+    <LI><OBJECT type="text/sitemap">
+        <param name="Name" value="Zoom and Pan">
+        <param name="Local" value="zoom_pan.htm">
+    </OBJECT>
+    <LI><OBJECT type="text/sitemap">
+        <param name="Name" value="Supported Image Formats">
+        <param name="Local" value="formats.htm">
+    </OBJECT>
+    <LI><OBJECT type="text/sitemap">
+        <param name="Name" value="Printing">
+        <param name="Local" value="printing.htm">
+    </OBJECT>
+    <LI><OBJECT type="text/sitemap">
+        <param name="Name" value="Tips and Keyboard Shortcuts">
+        <param name="Local" value="tips.htm">
+    </OBJECT>
+</UL>
+</BODY>
+</HTML>

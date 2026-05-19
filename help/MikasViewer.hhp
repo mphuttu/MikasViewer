@@ -1,0 +1,22 @@
+[OPTIONS]
+Compiled file=MikasViewer.chm
+Contents file=MikasViewer.hhc
+Index file=MikasViewer.hhk
+Default topic=overview.htm
+Title=MikasViewer Help
+Default Window=Main
+Full-text search=Yes
+Language=0x409 English (United States)
+
+[WINDOWS]
+Main="MikasViewer Help","MikasViewer.hhc","MikasViewer.hhk","overview.htm","overview.htm",,,,,0x63520,,0x380e,[10,10,790,570],0x918f0000,,,,,,0
+
+[FILES]
+overview.htm
+usage.htm
+zoom_pan.htm
+formats.htm
+printing.htm
+tips.htm
+style.css
+

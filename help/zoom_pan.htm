@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Zoom and Pan</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<h1>Zoom and Pan</h1>
+
+<h2>Zooming with the Mouse Wheel</h2>
+<p>
+    Roll the mouse wheel over the image to zoom in or out:
+</p>
+<ul>
+    <li><strong>Scroll up</strong> — zoom in (+15&nbsp;% per notch)</li>
+    <li><strong>Scroll down</strong> — zoom out (&minus;15&nbsp;% per notch)</li>
+</ul>
+<p>
+    The zoom is <em>anchored to the cursor position</em>: the pixel under the mouse
+    pointer stays in place as you zoom, making it easy to focus on a specific area.
+</p>
+<p>Zoom range: <strong>5&nbsp;%</strong> to <strong>2000&nbsp;%</strong>.</p>
+
+<div class="tip">
+    <strong>Tip:</strong> To return to the fit-to-window view, click the image file
+    in the tree again — this reloads it at the default fit zoom.
+</div>
+
+<h2>Panning (Scrolling)</h2>
+<p>
+    When the image is larger than the window you can pan in two ways:
+</p>
+<ul>
+    <li><strong>Click and drag</strong> — hold the left mouse button and drag to move
+        around the image. The cursor changes to a hand <kbd>&#9997;</kbd> to indicate
+        pan mode, and to a four-arrow cursor <kbd>&#10021;</kbd> while dragging.</li>
+    <li><strong>Scroll bars</strong> — horizontal and vertical scroll bars appear
+        automatically when the image exceeds the window size. They disappear when
+        the image fits entirely in the window.</li>
+</ul>
+
+<h2>Fit to Window</h2>
+<p>
+    Every time you select a new image it is automatically scaled to fit the window
+    (maximum 100&nbsp;% — the image is never enlarged above its actual pixel size on load).
+</p>
+</body>
+</html>

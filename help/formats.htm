@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Supported Image Formats</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<h1>Supported Image Formats</h1>
+
+<p>MikasViewer can open the following image formats:</p>
+
+<table>
+    <tr><th>Extension(s)</th><th>Format</th><th>Notes</th></tr>
+    <tr><td><kbd>.jpg</kbd> &nbsp;<kbd>.jpeg</kbd></td><td>JPEG</td>
+        <td>Loaded via GDI+. Most common photo format.</td></tr>
+    <tr><td><kbd>.png</kbd></td><td>PNG</td>
+        <td>Loaded via GDI+. Supports transparency (alpha channel).</td></tr>
+    <tr><td><kbd>.bmp</kbd></td><td>Bitmap</td>
+        <td>Loaded via GDI+. Standard Windows bitmap.</td></tr>
+    <tr><td><kbd>.gif</kbd></td><td>GIF</td>
+        <td>Loaded via GDI+. Only the first frame is displayed.</td></tr>
+    <tr><td><kbd>.tif</kbd> &nbsp;<kbd>.tiff</kbd></td><td>TIFF</td>
+        <td>Loaded via GDI+. Supports multi-page files (first page shown).</td></tr>
+    <tr><td><kbd>.webp</kbd></td><td>WebP</td>
+        <td>Loaded via Windows Imaging Component (WIC). See note below.</td></tr>
+</table>
+
+<div class="note">
+    <strong>WebP on Windows 10:</strong> WebP support requires the
+    <a href="https://apps.microsoft.com/detail/9pg2dk419drg" target="_blank">WebP Image Extensions</a>
+    app from the Microsoft Store. On Windows&nbsp;11 the codec is built in — no additional
+    installation is needed.
+</div>
+
+<h2>How Formats Are Detected</h2>
+<p>
+    MikasViewer detects image files by their file extension (case-insensitive).
+    Files with the extensions listed above are shown in the folder tree and can
+    be opened by clicking.
+</p>
+</body>
+</html>
