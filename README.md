@@ -53,6 +53,29 @@ The executable is placed in `x64\Debug\` or `x64\Release\`.
 > "C:\Program Files (x86)\HTML Help Workshop\hhc.exe" help\MikasViewer.hhp
 > ```
 
+## Creating the Installer
+
+The installer is built with [Inno Setup 6](https://jrsoftware.org/isinfo.php).
+
+**Prerequisites:**
+1. Build the **Release x64** configuration in Visual Studio first (`x64\Release\MikasViewer.exe` must exist).
+2. Compile the CHM help file (see above) — `help\MikasViewer.chm` must exist.
+3. Install [Inno Setup 6](https://jrsoftware.org/isdl.php) if not already present.
+
+**Build the installer:**
+```
+"C:\Program Files (x86)\Inno Setup 6\ISCC.exe" MikasViewer.iss
+```
+Or open `MikasViewer.iss` in the Inno Setup IDE and press **Compile** (`F9`).
+
+The installer is written to `setup_output\MikasViewerSetup-1.0-x64.exe`.
+
+The installer:
+- Installs `MikasViewer.exe` and `MikasViewer.chm` to `%ProgramFiles%\MikasViewer`
+- Creates a Start Menu entry and an optional desktop shortcut
+- Checks for the Visual C++ 2015–2022 Redistributable (x64) and warns if it is missing
+- Creates an uninstaller accessible from **Settings → Apps** or **Control Panel → Programs**
+
 ## Usage
 
 | Action | Result |

@@ -33,6 +33,9 @@ ipch/
 packages/
 *.nupkg
 
+# Inno Setup output
+setup_output/
+
 # Windows thumbnail cache
 Thumbs.db
 ehthumbs.db
