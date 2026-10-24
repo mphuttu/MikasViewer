@@ -24,7 +24,7 @@
 BEGIN_MESSAGE_MAP(CMikasViewerApp, CWinAppEx)
 	ON_COMMAND(ID_APP_ABOUT, &CMikasViewerApp::OnAppAbout)
 	ON_COMMAND(ID_HELP_TOPICS, &CMikasViewerApp::OnHelpTopics)
-	ON_COMMAND(ID_APP_HELP,    &CMikasViewerApp::OnHelpTopics)  // F1
+	ON_COMMAND(ID_HELP,        &CMikasViewerApp::OnHelpTopics)  // F1
 	// Standard file based document commands
 	ON_COMMAND(ID_FILE_NEW, &CWinAppEx::OnFileNew)
 	ON_COMMAND(ID_FILE_OPEN, &CWinAppEx::OnFileOpen)
@@ -49,12 +49,8 @@ CMikasViewerApp::CMikasViewerApp() noexcept
 	System::Windows::Forms::Application::SetUnhandledExceptionMode(System::Windows::Forms::UnhandledExceptionMode::ThrowException);
 #endif
 
-	// TODO: replace application ID string below with unique ID string; recommended
-	// format for string is CompanyName.ProductName.SubProduct.VersionInformation
-	SetAppID(_T("MikasViewer.AppID.NoVersion"));
-
-	// TODO: add construction code here,
-	// Place all significant initialization in InitInstance
+	// Unique application ID for registration and restart-manager behavior.
+	SetAppID(_T("MikaHuttunen.MikasViewer"));
 }
 
 // The one and only CMikasViewerApp object
@@ -97,14 +93,17 @@ BOOL CMikasViewerApp::InitInstance()
 	// If you are not using these features and wish to reduce the size
 	// of your final executable, you should remove from the following
 	// the specific initialization routines you do not need
-	// Change the registry key under which our settings are stored
-	// TODO: You should modify this string to be something appropriate
-	// such as the name of your company or organization
-	// Alusta GDI+ ennen minkään Gdiplus-luokan käyttöä
-	Gdiplus::GdiplusStartupInput gdiplusInput;
-	Gdiplus::GdiplusStartup(&m_gdiplusToken, &gdiplusInput, nullptr);
+	// Change the registry key under which our settings are stored.
+	SetRegistryKey(_T("Mika Huttunen\\MikasViewer"));
 
-	SetRegistryKey(_T("Local AppWizard-Generated Applications"));
+	// Initialize GDI+ before any Gdiplus types are used.
+	Gdiplus::GdiplusStartupInput gdiplusInput;
+	Gdiplus::Status status = Gdiplus::GdiplusStartup(&m_gdiplusToken, &gdiplusInput, nullptr);
+	if (status != Gdiplus::Ok)
+	{
+		AfxMessageBox(_T("The application could not initialize GDI+. Please verify that the Windows runtime is working correctly."));
+		return FALSE;
+	}
 	LoadStdProfileSettings(4);  // Load standard INI file options (including MRU)
 
 
@@ -157,9 +156,12 @@ BOOL CMikasViewerApp::InitInstance()
 
 int CMikasViewerApp::ExitInstance()
 {
-	//TODO: handle additional resources you may have added
 	AfxOleTerm(FALSE);
-	Gdiplus::GdiplusShutdown(m_gdiplusToken);
+	if (m_gdiplusToken != 0)
+	{
+		Gdiplus::GdiplusShutdown(m_gdiplusToken);
+		m_gdiplusToken = 0;
+	}
 
 	return CWinAppEx::ExitInstance();
 }

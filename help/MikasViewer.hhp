@@ -13,10 +13,17 @@ Main="MikasViewer Help","MikasViewer.hhc","MikasViewer.hhk","overview.htm","over
 
 [FILES]
 overview.htm
+getting_started.htm
 usage.htm
 zoom_pan.htm
 formats.htm
 printing.htm
 tips.htm
+configuration.htm
+feature_reference.htm
+troubleshooting.htm
+faq.htm
+technical_information.htm
+release_notes.htm
 style.css
 

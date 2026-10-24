@@ -30,8 +30,6 @@ END_MESSAGE_MAP()
 
 CMikasViewerDoc::CMikasViewerDoc() noexcept
 {
-	// TODO: add one-time construction code here
-
 }
 
 CMikasViewerDoc::~CMikasViewerDoc()
@@ -42,9 +40,6 @@ BOOL CMikasViewerDoc::OnNewDocument()
 {
 	if (!CDocument::OnNewDocument())
 		return FALSE;
-
-	// TODO: add reinitialization code here
-	// (SDI documents will reuse this document)
 
 	return TRUE;
 }
@@ -58,11 +53,9 @@ void CMikasViewerDoc::Serialize(CArchive& ar)
 {
 	if (ar.IsStoring())
 	{
-		// TODO: add storing code here
 	}
 	else
 	{
-		// TODO: add loading code here
 	}
 }
 
@@ -74,7 +67,7 @@ void CMikasViewerDoc::OnDrawThumbnail(CDC& dc, LPRECT lprcBounds)
 	// Modify this code to draw the document's data
 	dc.FillSolidRect(lprcBounds, RGB(255, 255, 255));
 
-	CString strText = _T("TODO: implement thumbnail drawing here");
+	CString strText = _T("MikasViewer thumbnail preview");
 	LOGFONT lf;
 
 	CFont* pDefaultGUIFont = CFont::FromHandle((HFONT) GetStockObject(DEFAULT_GUI_FONT));

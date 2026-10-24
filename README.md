@@ -1,25 +1,43 @@
 # MikasViewer
 
-A Windows image viewer built with MFC (Microsoft Foundation Classes) and GDI+.
+MikasViewer is a lightweight Windows image viewer for quick browsing, zooming, and printing of common image formats. It is built with MFC and GDI+ for a familiar desktop experience without the overhead of a full photo-management application.
 
 ## Screenshot
 
 ![MikasViewer](docs/images/2026-05-19-MikasViewer-Screenshot.png)
 
+## Overview
+
+MikasViewer is designed for users who want an immediate, no-frills workflow:
+
+- Explore drives and folders through an Explorer-style tree,
+- Open images directly from the tree without a separate file dialog,
+- View and zoom images quickly with smooth GDI+ rendering,
+- Pan large images using drag or the scroll bars,
+- Print or preview the current image in a single click.
+
+## Audience
+
+This application is intended for:
+
+- Desktop users who browse folders of photographs and illustrations,
+- Windows users who prefer a simple native MFC viewer,
+- Developers or testers who need a minimal reference app for image viewing and printing.
+
 ## Features
 
-- **Explorer-style folder tree** — Browse your file system with a familiar tree view. All logical drives are shown at the root level with their display names (e.g. "Windows (C:)") and Windows shell icons.
-- **Lazy loading** — Subfolders and image files are loaded on demand when a tree node is expanded, keeping the UI fast even with large directory structures.
-- **Image files in tree** — Image files (JPG, PNG, BMP, GIF, TIFF, WEBP) are shown directly in the folder tree alongside folders.
-- **Centered image display** — The selected image is automatically centered in the view and scaled to fit the window (fit-to-window, max 100 %).
-- **Mouse pan** — Click and drag to pan around images larger than the window.
-- **Mouse wheel zoom** — Scroll to zoom in/out (±15 % per notch, range 5 %–2000 %). Zoom is anchored to the mouse cursor position.
-- **Double-buffered rendering** — Flicker-free drawing with GDI+ high-quality bicubic interpolation.
-- **Dark background** — Dark grey background (similar to common image viewers) for comfortable image browsing.
-- **Title bar** — Shows the current image filename in the window title bar.
-- **WebP support** — WebP images are loaded via Windows Imaging Component (WIC) as a fallback when GDI+ cannot decode the format.
-- **Print & Print Preview** — Print the current image via **File → Print** or preview it with **File → Print Preview**. The image is automatically scaled to fill the printable area (with a 5 % margin on each side) while preserving the aspect ratio, and centered on the page.
-- **Help system** — Built-in CHM help file, opened via **Help → Help Topics** or <kbd>F1</kbd>. Covers browsing, zoom/pan, supported formats, printing, and keyboard shortcuts.
+- Explorer-style folder tree with logical drives at the root,
+- Lazy loading for large directory structures,
+- Image files displayed inline with folders,
+- Fit-to-window rendering with centered presentation,
+- Mouse-wheel zoom anchored to the cursor position,
+- Drag-to-pan behavior for large images,
+- Double-buffered drawing for a smooth, low-flicker viewer experience,
+- Dark viewing background similar to common image viewer apps,
+- Window title bar showing the current filename,
+- WebP decoding through WIC when GDI+ cannot open the file,
+- Print and print-preview support with page scaling,
+- Built-in CHM help via F1 or Help > Help Topics.
 
 ## Supported Image Formats
 
@@ -32,49 +50,50 @@ A Windows image viewer built with MFC (Microsoft Foundation Classes) and GDI+.
 | `.tif` / `.tiff` | TIFF |
 | `.webp` | WebP (via WIC) |
 
-> **WebP on Windows 10:** requires [WebP Image Extensions](https://apps.microsoft.com/detail/9pg2dk419drg) from the Microsoft Store. Built-in on Windows 11.
+> WebP support on Windows 10 requires the [WebP Image Extensions](https://apps.microsoft.com/detail/9pg2dk419drg) app from the Microsoft Store. On Windows 11, the codec is built in.
 
 ## Requirements
 
-- Windows 10 or later
-- Visual Studio 2022 (v143 toolset)
-- MFC (included with Visual Studio "Desktop development with C++" workload)
+- Windows 10 or later,
+- Visual Studio 2022 (v143 toolset) or Visual Studio 2026 Community,
+- MFC support from the "Desktop development with C++" workload,
+- Optional: HTML Help Workshop for rebuilding the CHM help file,
+- Optional: Inno Setup 6 for creating the installer package.
 
-## Building
+## Build Instructions
 
-1. Open `MikasViewer.slnx` in Visual Studio 2022.
-2. Select configuration **Debug** or **Release**, platform **x64**.
-3. Build → Build Solution (`Ctrl+Shift+B`).
+1. Open `MikasViewer.slnx` in Visual Studio.
+2. Set the configuration to **Debug** or **Release**.
+3. Set the platform to **x64**.
+4. Choose **Build > Build Solution**.
 
-The executable is placed in `x64\Debug\` or `x64\Release\`.
+The build output is placed in `x64\Debug\` or `x64\Release\` depending on the selected configuration.
 
-> **Help file:** After building, copy `help\MikasViewer.chm` to the same directory as the executable. To recompile the help file after editing sources, run:
-> ```
-> "C:\Program Files (x86)\HTML Help Workshop\hhc.exe" help\MikasViewer.hhp
-> ```
+> Help file rebuild: `"C:\Program Files (x86)\HTML Help Workshop\hhc.exe" help\MikasViewer.hhp`
+
+## Documentation
+
+- Help topics: `help\`
+- CHM help file: `help\MikasViewer.chm`
+- Main project docs: `README.md`
 
 ## Creating the Installer
 
-The installer is built with [Inno Setup 6](https://jrsoftware.org/isinfo.php).
+The installer is created with [Inno Setup 6](https://jrsoftware.org/isinfo.php).
 
-**Prerequisites:**
-1. Build the **Release x64** configuration in Visual Studio first (`x64\Release\MikasViewer.exe` must exist).
-2. Compile the CHM help file (see above) — `help\MikasViewer.chm` must exist.
-3. Install [Inno Setup 6](https://jrsoftware.org/isdl.php) if not already present.
+Prerequisites:
 
-**Build the installer:**
-```
+1. Build the **Release x64** configuration first.
+2. Rebuild the CHM help file so `help\MikasViewer.chm` exists.
+3. Install [Inno Setup 6](https://jrsoftware.org/isdl.php) if not already available.
+
+Build command:
+
+```powershell
 "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" MikasViewer.iss
 ```
-Or open `MikasViewer.iss` in the Inno Setup IDE and press **Compile** (`F9`).
 
-The installer is written to `setup_output\MikasViewerSetup-1.0-x64.exe`.
-
-The installer:
-- Installs `MikasViewer.exe` and `MikasViewer.chm` to `%ProgramFiles%\MikasViewer`
-- Creates a Start Menu entry and an optional desktop shortcut
-- Checks for the Visual C++ 2015–2022 Redistributable (x64) and warns if it is missing
-- Creates an uninstaller accessible from **Settings → Apps** or **Control Panel → Programs**
+The resulting package is written to `setup_output\MikasViewerSetup-1.0-x64.exe`.
 
 ## Usage
 
@@ -82,12 +101,29 @@ The installer:
 |--------|--------|
 | Click a folder in the tree | Displays the first image found in that folder |
 | Click an image file in the tree | Displays that image |
-| Mouse wheel | Zoom in / out (anchored to cursor) |
+| Mouse wheel | Zoom in / out, anchored to the cursor |
 | Left-click + drag | Pan the image |
 | `Ctrl+P` | Print the current image |
-| **File → Print Preview** | Preview the print output before printing |
-| <kbd>F1</kbd> or **Help → Help Topics** | Open the built-in help file |
+| `F1` or Help > Help Topics | Open the built-in help file |
+
+## Troubleshooting
+
+- Help does not open: ensure `MikasViewer.chm` exists next to the executable.
+- Images do not display: verify the file is a supported format and that the file extension matches the content.
+- WebP files fail to load: install the WebP Image Extensions app on Windows 10.
+- Print is unavailable: confirm that an image is currently displayed.
+- The application does not start: install the Visual C++ 2015–2022 x64 redistributable if required.
+
+## Contributing
+
+Contributions are welcome. Please:
+
+- Keep changes focused and compatible with Windows MFC conventions,
+- Preserve existing public file formats, keyboard mappings, and backward compatibility,
+- Validate with a clean build before submitting,
+- Update the help documentation when user-visible behavior changes,
+- Keep commit messages concise and meaningful.
 
 ## License
 
-MIT
+This project is licensed under the MIT license.

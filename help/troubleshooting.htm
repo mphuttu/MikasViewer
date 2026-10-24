@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Troubleshooting</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<h1>Troubleshooting</h1>
+
+<h2>Common Problems</h2>
+
+<h3>Help file does not open</h3>
+<p>
+    Confirm that <strong>MikasViewer.chm</strong> is present next to the main executable. If the file is missing, rebuild the CHM help project or reinstall the application package.
+</p>
+
+<h3>Images do not display</h3>
+<p>
+    Ensure the file is in a supported format and the extension matches the actual contents. If the viewer does not open a file, try a different image editor or confirm that the file is not corrupted.
+</p>
+
+<h3>WebP files fail to open</h3>
+<p>
+    On Windows 10, install <a href="https://apps.microsoft.com/detail/9pg2dk419drg" target="_blank">WebP Image Extensions</a>. On Windows 11, the codec is typically available by default.
+</p>
+
+<h3>Print is disabled</h3>
+<p>
+    Print and print preview are available only while an image is loaded. Select a valid image first, then try again.
+</p>
+
+<h2>Recovery Procedures</h2>
+<ul>
+    <li>Restart the application after installing missing runtime components.</li>
+    <li>Rebuild the CHM help file if the help window fails to open.</li>
+    <li>Reinstall the app if files or shortcuts are missing.</li>
+</ul>
+
+<div class="note">
+    <strong>Note:</strong> If the application does not start, verify that the Visual C++ 2015–2022 x64 redistributable is installed.
+</div>
+
+<h2>Related Topics</h2>
+<ul>
+    <li><a href="faq.htm">Frequently Asked Questions</a></li>
+    <li><a href="technical_information.htm">Technical Information</a></li>
+    <li><a href="release_notes.htm">Release Notes</a></li>
+</ul>
+</body>
+</html>

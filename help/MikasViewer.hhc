@@ -13,6 +13,10 @@
         <param name="Local" value="overview.htm">
     </OBJECT>
     <LI><OBJECT type="text/sitemap">
+        <param name="Name" value="Getting Started">
+        <param name="Local" value="getting_started.htm">
+    </OBJECT>
+    <LI><OBJECT type="text/sitemap">
         <param name="Name" value="Browsing and Viewing Images">
         <param name="Local" value="usage.htm">
     </OBJECT>
@@ -29,8 +33,32 @@
         <param name="Local" value="printing.htm">
     </OBJECT>
     <LI><OBJECT type="text/sitemap">
+        <param name="Name" value="Configuration">
+        <param name="Local" value="configuration.htm">
+    </OBJECT>
+    <LI><OBJECT type="text/sitemap">
+        <param name="Name" value="Feature Reference">
+        <param name="Local" value="feature_reference.htm">
+    </OBJECT>
+    <LI><OBJECT type="text/sitemap">
         <param name="Name" value="Tips and Keyboard Shortcuts">
         <param name="Local" value="tips.htm">
+    </OBJECT>
+    <LI><OBJECT type="text/sitemap">
+        <param name="Name" value="Troubleshooting">
+        <param name="Local" value="troubleshooting.htm">
+    </OBJECT>
+    <LI><OBJECT type="text/sitemap">
+        <param name="Name" value="Frequently Asked Questions">
+        <param name="Local" value="faq.htm">
+    </OBJECT>
+    <LI><OBJECT type="text/sitemap">
+        <param name="Name" value="Technical Information">
+        <param name="Local" value="technical_information.htm">
+    </OBJECT>
+    <LI><OBJECT type="text/sitemap">
+        <param name="Name" value="Release Notes">
+        <param name="Local" value="release_notes.htm">
     </OBJECT>
 </UL>
 </BODY>
