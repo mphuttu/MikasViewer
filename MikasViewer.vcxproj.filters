@@ -42,6 +42,12 @@
     <ClInclude Include="FolderTreeView.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="FileListView.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageNavigation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MikasViewer.cpp">
@@ -60,6 +66,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="FolderTreeView.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FileListView.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -1,7 +1,9 @@
 #pragma once
 #include "pch.h"
 #include "FolderTreeView.h"
+#include "AppFileSystemUtils.h"
 #include "MainFrm.h"
+#include <filesystem>
 #include <shellapi.h>
 
 IMPLEMENT_DYNCREATE(CFolderTreeView, CTreeView)
@@ -31,39 +33,25 @@ int CFolderTreeView::GetSysIconIndex(const CString& path, bool bOpen)
 // Tarkistaa onko tiedosto tuettu kuvaformaatti
 /*static*/ bool CFolderTreeView::IsImageFile(const CString& fileName)
 {
-    int dotPos = fileName.ReverseFind(_T('.'));
-    if (dotPos < 0) return false;
-    CString ext = fileName.Mid(dotPos);
-    ext.MakeLower();
-    return ext == _T(".jpg")  || ext == _T(".jpeg") ||
-           ext == _T(".png")  || ext == _T(".bmp")  ||
-           ext == _T(".gif")  || ext == _T(".tif")  ||
-           ext == _T(".tiff") || ext == _T(".webp");
+    return MikasViewer::FileSystem::IsSupportedImageFileName(fileName.GetString());
 }
 
 // Tarkistaa onko kansiossa alikansioita tai kuvatiedostoja (expand-painiketta varten)
 bool CFolderTreeView::HasExpandableContent(const CString& strPath)
 {
     UINT oldMode = SetErrorMode(SEM_FAILCRITICALERRORS);
-    CFileFind finder;
-    CString searchPath = strPath;
-    if (searchPath.Right(1) != _T("\\")) searchPath += _T("\\");
-    searchPath += _T("*.*");
-
-    BOOL bWorking = finder.FindFile(searchPath);
-    while (bWorking)
+    const std::wstring normalizedPath = MikasViewer::FileSystem::NormalizeDirectoryPath(strPath.GetString());
+    bool hasContent = false;
+    try
     {
-        bWorking = finder.FindNextFile();
-        if (finder.IsDots()) continue;
-        if (finder.IsDirectory() || IsImageFile(finder.GetFileName()))
-        {
-            finder.Close();
-            SetErrorMode(oldMode);
-            return true;
-        }
+        hasContent = MikasViewer::FileSystem::DirectoryContainsExpandableContent(normalizedPath);
+    }
+    catch (const std::filesystem::filesystem_error& error)
+    {
+        TRACE(_T("Could not inspect folder %s: %hs\n"), strPath.GetString(), error.what());
     }
     SetErrorMode(oldMode);
-    return false;
+    return hasContent;
 }
 
 void CFolderTreeView::OnInitialUpdate()

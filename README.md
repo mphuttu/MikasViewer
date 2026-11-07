@@ -1,6 +1,6 @@
 # MikasViewer
 
-MikasViewer is a lightweight Windows image viewer for quick browsing, zooming, and printing of common image formats. It is built with MFC and GDI+ for a familiar desktop experience without the overhead of a full photo-management application.
+MikasViewer is a lightweight Windows image viewer for browsing, zooming, and printing common image formats. It is built with MFC and GDI+.
 
 ## Screenshot
 
@@ -29,6 +29,10 @@ This application is intended for:
 - Explorer-style folder tree with logical drives at the root,
 - Lazy loading for large directory structures,
 - Image files displayed inline with folders,
+- Manage mode with a folder tree, image thumbnail list, and image preview,
+- View mode for inspecting the selected image without the browsing panes,
+- Previous, next, first, and last image navigation in the current folder,
+- Slideshow of the current folder with configurable interval and repeat,
 - Fit-to-window rendering with centered presentation,
 - Mouse-wheel zoom anchored to the cursor position,
 - Drag-to-pan behavior for large images,
@@ -55,21 +59,29 @@ This application is intended for:
 ## Requirements
 
 - Windows 10 or later,
-- Visual Studio 2022 (v143 toolset) or Visual Studio 2026 Community,
+- Visual Studio 2026 Community with the v145 C++ toolset,
 - MFC support from the "Desktop development with C++" workload,
 - Optional: HTML Help Workshop for rebuilding the CHM help file,
 - Optional: Inno Setup 6 for creating the installer package.
 
 ## Build Instructions
 
-1. Open `MikasViewer.slnx` in Visual Studio.
-2. Set the configuration to **Debug** or **Release**.
-3. Set the platform to **x64**.
+1. Clone the repository with its GoogleTest submodule:
+
+   ```powershell
+   git clone --recurse-submodules https://github.com/mphuttu/MikasViewer.git
+   ```
+
+   For an existing clone, run `git submodule update --init --recursive` from the repository root.
+
+2. Open `MikasViewer.slnx` in Visual Studio.
+3. Set the configuration to **Debug** or **Release** and the platform to **x64**.
 4. Choose **Build > Build Solution**.
+5. Run `x64\Debug\MikasViewerTests.exe` or `x64\Release\MikasViewerTests.exe` to execute the tests.
 
 The build output is placed in `x64\Debug\` or `x64\Release\` depending on the selected configuration.
 
-> Help file rebuild: `"C:\Program Files (x86)\HTML Help Workshop\hhc.exe" help\MikasViewer.hhp`
+> Help file rebuild in PowerShell: `& "C:\Program Files (x86)\HTML Help Workshop\hhc.exe" help\MikasViewer.hhp`
 
 ## Documentation
 
@@ -90,7 +102,7 @@ Prerequisites:
 Build command:
 
 ```powershell
-"C:\Program Files (x86)\Inno Setup 6\ISCC.exe" MikasViewer.iss
+& "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" MikasViewer.iss
 ```
 
 The resulting package is written to `setup_output\MikasViewerSetup-1.0-x64.exe`.
@@ -99,12 +111,24 @@ The resulting package is written to `setup_output\MikasViewerSetup-1.0-x64.exe`.
 
 | Action | Result |
 |--------|--------|
-| Click a folder in the tree | Displays the first image found in that folder |
-| Click an image file in the tree | Displays that image |
+| Click **Manage** / **View** | Switch between browsing and image viewing |
+| Click a folder in the tree | Lists supported images and previews the first image by name |
+| Click an image file in the tree or a thumbnail | Displays that image |
+| Double-click a thumbnail | Opens View mode |
+| Left / Right, Home / End | Previous / next, first / last image when the image or thumbnail list has focus |
+| Click an arrow beside the image | Open the previous or next image when space permits |
+| Slideshow > Start | Start from the selected image in View mode |
+| Slideshow > Stop or `Esc` | Stop the slideshow; the current image remains visible |
 | Mouse wheel | Zoom in / out, anchored to the cursor |
 | Left-click + drag | Pan the image |
 | `Ctrl+P` | Print the current image |
 | `F1` or Help > Help Topics | Open the built-in help file |
+
+The Slideshow menu offers intervals of 2, 5, 10, or 30 seconds; the default is
+5 seconds. Repeat is enabled by default and can be turned off to stop at the
+last image. Settings last until the application closes. Switching to Manage mode,
+printing, or an image-loading error also stops the slideshow. The folder tree
+keeps its normal keyboard navigation when it has focus.
 
 ## Troubleshooting
 
@@ -112,6 +136,7 @@ The resulting package is written to `setup_output\MikasViewerSetup-1.0-x64.exe`.
 - Images do not display: verify the file is a supported format and that the file extension matches the content.
 - WebP files fail to load: install the WebP Image Extensions app on Windows 10.
 - Print is unavailable: confirm that an image is currently displayed.
+- A thumbnail is missing: Windows could not provide a thumbnail for that file; try selecting the filename to open it.
 - The application does not start: install the Visual C++ 2015–2022 x64 redistributable if required.
 
 ## Contributing

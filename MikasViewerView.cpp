@@ -10,6 +10,7 @@
 
 #include "MikasViewerDoc.h"
 #include "MikasViewerView.h"
+#include "MainFrm.h"
 #include <wincodec.h>
 #pragma comment(lib, "windowscodecs.lib")
 
@@ -165,6 +166,36 @@ BOOL CMikasViewerView::OnEraseBkgnd(CDC* /*pDC*/)
 	return TRUE;  // Tausta piirretään OnDraw:ssa double-bufferilla → ei värinää
 }
 
+CRect CMikasViewerView::GetNavigationRect(ImageNavigation navigation) const
+{
+	CRect rect;
+	if (!m_pImage || (navigation != ImageNavigation::Previous && navigation != ImageNavigation::Next))
+		return rect;
+
+	CMainFrame* frame = DYNAMIC_DOWNCAST(CMainFrame, GetParentFrame());
+	if (!frame || !frame->CanNavigateImage(navigation))
+		return rect;
+
+	CRect client;
+	GetClientRect(&client);
+	const int dpi = static_cast<int>(GetDpiForWindow(m_hWnd));
+	const int width = MulDiv(32, dpi, 96);
+	const int height = MulDiv(40, dpi, 96);
+	const int margin = MulDiv(8, dpi, 96);
+	const int imageWidth = static_cast<int>(m_pImage->GetWidth() * m_dZoom);
+	const int imageX = max(0, (client.Width() - imageWidth) / 2) - m_scrollPos.x;
+	if (client.Height() < height + 2 * margin)
+		return rect;
+
+	const int y = (client.Height() - height) / 2;
+	if (navigation == ImageNavigation::Previous && imageX >= width + 2 * margin)
+		rect.SetRect(margin, y, margin + width, y + height);
+	else if (navigation == ImageNavigation::Next &&
+		client.Width() - (imageX + imageWidth) >= width + 2 * margin)
+		rect.SetRect(client.right - margin - width, y, client.right - margin, y + height);
+	return rect;
+}
+
 void CMikasViewerView::OnDraw(CDC* pDC)
 {
 	CMikasViewerDoc* pDoc = GetDocument();
@@ -196,6 +227,23 @@ void CMikasViewerView::OnDraw(CDC* pDC)
 		Graphics g(memDC.GetSafeHdc());
 		g.SetInterpolationMode(InterpolationModeHighQualityBicubic);
 		g.DrawImage(m_pImage.get(), ox, oy, sw, sh);
+
+		for (const auto direction : { ImageNavigation::Previous, ImageNavigation::Next })
+		{
+			const CRect arrow = GetNavigationRect(direction);
+			if (arrow.IsRectEmpty())
+				continue;
+			SolidBrush background(Color(220, 75, 75, 75));
+			g.FillRectangle(&background, arrow.left, arrow.top, arrow.Width(), arrow.Height());
+			Pen pen(Color(255, 255, 255, 255), max(2.0f, arrow.Width() / 12.0f));
+			const int centerX = arrow.CenterPoint().x;
+			const int centerY = arrow.CenterPoint().y;
+			const int deltaX = arrow.Width() / 5;
+			const int deltaY = arrow.Height() / 5;
+			const int sign = direction == ImageNavigation::Previous ? -1 : 1;
+			g.DrawLine(&pen, centerX - sign * deltaX, centerY - deltaY, centerX + sign * deltaX, centerY);
+			g.DrawLine(&pen, centerX + sign * deltaX, centerY, centerX - sign * deltaX, centerY + deltaY);
+		}
 	}
 
 	pDC->BitBlt(0, 0, rc.Width(), rc.Height(), &memDC, 0, 0, SRCCOPY);
@@ -208,6 +256,17 @@ void CMikasViewerView::OnDraw(CDC* pDC)
 void CMikasViewerView::OnLButtonDown(UINT nFlags, CPoint point)
 {
 	if (!m_pImage) return;
+	SetFocus();
+	for (const auto direction : { ImageNavigation::Previous, ImageNavigation::Next })
+	{
+		if (GetNavigationRect(direction).PtInRect(point))
+		{
+			CMainFrame* frame = DYNAMIC_DOWNCAST(CMainFrame, GetParentFrame());
+			if (frame)
+				frame->NavigateImage(direction);
+			return;
+		}
+	}
 	m_bDragging     = true;
 	m_ptDragStart   = point;
 	m_ptScrollStart = m_scrollPos;
@@ -355,7 +414,18 @@ static std::unique_ptr<Gdiplus::Bitmap> LoadViaWIC(const CString& strPath)
 	return pBmp;
 }
 
-void CMikasViewerView::LoadImage(const CString& strPath)
+void CMikasViewerView::ClearImage()
+{
+	m_pImage.reset();
+	m_dZoom = 1.0;
+	m_scrollPos = CPoint(0, 0);
+	UpdateScrollBars();
+	Invalidate(FALSE);
+	if (AfxGetMainWnd())
+		AfxGetMainWnd()->SetWindowText(_T("MikasViewer"));
+}
+
+bool CMikasViewerView::LoadImage(const CString& strPath)
 {
 	// Kokeile ensin GDI+ (make_unique käyttää ::new → ohittaa DEBUG_NEW-makron)
 	auto pNew = std::make_unique<Gdiplus::Image>((LPCWSTR)strPath);
@@ -366,7 +436,7 @@ void CMikasViewerView::LoadImage(const CString& strPath)
 		if (!pBmp)
 		{
 			AfxMessageBox(_T("Kuvan lataus epäonnistui."));
-			return;
+			return false;
 		}
 		// Bitmap periytyy Image:sta → release+siirto on turvallista
 		m_pImage = std::unique_ptr<Gdiplus::Image>(pBmp.release());
@@ -399,6 +469,7 @@ void CMikasViewerView::LoadImage(const CString& strPath)
 	CString fileName = (nSlash >= 0) ? strPath.Mid(nSlash + 1) : strPath;
 	if (AfxGetMainWnd())
 		AfxGetMainWnd()->SetWindowText(fileName + _T(" - MikasViewer"));
+	return true;
 }
 
 
@@ -500,4 +571,3 @@ CMikasViewerDoc* CMikasViewerView::GetDocument() const
 	return (CMikasViewerDoc*)m_pDocument;
 }
 #endif //_DEBUG
-

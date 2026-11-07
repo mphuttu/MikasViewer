@@ -4,6 +4,7 @@
 
 #pragma once
 #include "MikasViewerDoc.h"
+#include "ImageNavigation.h"
 #include <afxwin.h>
 #include <memory>
 #include <gdiplus.h>
@@ -37,10 +38,13 @@ public:
 	virtual void AssertValid() const;
 	virtual void Dump(CDumpContext& dc) const;
 #endif
-	void LoadImage(const CString& strPath);
+	bool LoadImage(const CString& strPath);
+	void ClearImage();
+	bool HasImage() const { return m_pImage != nullptr; }
 
 private:
 	void UpdateScrollBars();
+	CRect GetNavigationRect(ImageNavigation navigation) const;
 
 protected:
 	std::unique_ptr<Gdiplus::Image> m_pImage;
@@ -71,4 +75,3 @@ protected:
 inline CMikasViewerDoc* CMikasViewerView::GetDocument() const
    { return reinterpret_cast<CMikasViewerDoc*>(m_pDocument); }
 #endif
-

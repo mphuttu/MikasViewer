@@ -8,6 +8,12 @@
 <body>
 <h1>Browsing and Viewing Images</h1>
 
+<h2>Manage and View Modes</h2>
+<p>Use the <strong>Manage</strong> and <strong>View</strong> toolbar buttons to switch
+between browsing and inspecting the current image. Manage shows the folder tree,
+thumbnail list, and image preview. View hides the browsing panes. The current
+selection is retained when switching modes.</p>
+
 <h2>The Folder Tree</h2>
 <p>
     The left panel shows an Explorer-style folder tree. All logical drives on your
@@ -25,10 +31,36 @@
 <table>
     <tr><th>Action</th><th>Result</th></tr>
     <tr><td>Click a <strong>folder</strong></td>
-        <td>Displays the first image found in that folder.</td></tr>
-    <tr><td>Click an <strong>image file</strong></td>
+        <td>Lists supported images and previews the first image by name. An empty folder clears the preview.</td></tr>
+    <tr><td>Click an <strong>image file</strong> in the tree or a thumbnail</td>
         <td>Displays that image immediately.</td></tr>
+    <tr><td>Double-click a thumbnail</td><td>Opens View mode.</td></tr>
 </table>
+<p>Thumbnails are provided by Windows. If a thumbnail is unavailable, the filename
+remains in the list and can still be selected.</p>
+
+<h2>Navigating Images</h2>
+<p>In Manage or View, click the image or thumbnail list and use the
+<strong>Left</strong> and <strong>Right</strong> arrow keys to select the previous
+or next image in the current folder. <strong>Home</strong> selects the first image
+and <strong>End</strong> selects the last. Images follow the thumbnail list order
+and navigation stops at either end of the list.</p>
+<p>When there is enough space beside the image, click the left or right arrow to
+open the adjacent image. An arrow is not shown when there is no image in that
+direction. The folder tree retains its normal keyboard navigation when focused.</p>
+
+<h2>Slideshow</h2>
+<p>Choose <strong>Slideshow &rarr; Start</strong> to display images from the
+selected image onward in the current folder's thumbnail order. The application
+switches to View mode. The Slideshow menu remains available there.</p>
+<p>Use <strong>Interval</strong> to choose 2, 5, 10, or 30 seconds; the default is
+5 seconds. <strong>Repeat</strong> is enabled by default and continues from the
+first image after the last. Turn it off to stop at the last image. Settings last
+until the application closes and can be changed during playback.</p>
+<p>Use <strong>Slideshow &rarr; Stop</strong> or press <strong>Esc</strong> in the
+image view to stop, leaving the current image visible. Switching to Manage mode,
+opening another folder, printing, or an image loading error also stops playback.
+Manual image navigation during playback restarts the interval.</p>
 
 <h2>Image Display</h2>
 <p>
